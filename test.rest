@@ -1,0 +1,26 @@
+POST http://127.0.0.1::8080/login
+Content-Type: application/json
+
+{"username": "test", "password": "testhaslo"}
+
+###
+
+POST http://127.0.0.1::8080/signup
+Content-Type: application/json
+
+{"username": "test3", "password": "testhaslo"}
+
+###
+
+GET http://127.0.0.1::8080/validate_token
+Content-Type: application/json
+Authorization: Token 6b310c63e63123871dbad438b51bc6bd07afd44d
+
+{}
+
+###
+
+POST http://127.0.0.1::8080/add_value
+Content-Type: application/json
+
+{"username": "test3", "password": "testhaslo"}
