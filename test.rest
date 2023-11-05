@@ -14,13 +14,13 @@ Content-Type: application/json
 
 GET http://127.0.0.1::8080/validate_token
 Content-Type: application/json
-Authorization: Token 6b310c63e63123871dbad438b51bc6bd07afd44d
+Authorization: Token 0b973e14082ad3abf53fec6a7549b8c378eb20e6
 
-{}
+{"wins": 1, "losses": 1}
 
 ###
 
 POST http://127.0.0.1::8080/add_value
 Content-Type: application/json
 
-{"username": "test3", "password": "testhaslo"}
+{"username": "test", "wins": 1, "losses": 1}

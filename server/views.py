@@ -40,14 +40,20 @@ def signup(request):
 
 @api_view(['POST'])
 def add_value(request):
+    
     user = CustomUser.objects.get(username=request.data['username'])
-    user.wins = 69
+    user.wins += request.data['wins']
+    user.losses += request.data['losses']
     user.save()
-    return Response("", status=status.HTTP_200_OK)
+    return Response(request.data, status=status.HTTP_200_OK)
 
 
 @api_view(['GET'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def validate_token(request):
-    return Response("passed for {}".format(request.user.username))
+    user = CustomUser.objects.get(username=request.user.username)
+    user.wins += request.data['wins']
+    user.losses += request.data['losses']
+    user.save()
+    return Response("added value for {}".format(request.user.username))
