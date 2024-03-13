@@ -11,7 +11,7 @@ from rest_framework.authtoken.models import Token
 
 from .models import CustomUser, Task
 from .serializers import UserSerializer, CustomUserSerializer
-from .utils import generate_new_task
+from .utils import generate_new_task, check_answer
 
 
 
@@ -53,37 +53,43 @@ def add_value(request):
 
 
 
-@api_view(['GET'])
+@api_view(['POST'])
 @authentication_classes([SessionAuthentication, TokenAuthentication])
 @permission_classes([IsAuthenticated])
 def validate_answer(request):
-
-    return redirect('check_task')
-    
-
-
-@api_view(['POST'])
-def check_task(request):
-    
-    print(request)
-
     auth_header = request.META.get('HTTP_AUTHORIZATION')
+    token = None
+    user = None
 
-    if auth_header:
-        try:
-            token = auth_header.split()[1]
-            token = Token.objects.get(key=token)
-            user = token.user
-
-            print("poszlo")
-            return JsonResponse(request.data, status=status.HTTP_200_OK)
-        except Exception as error:
-
-            return JsonResponse(error, status=status.HTTP_404_NOT_FOUND)
-
-
-    return Response(status=status.HTTP_401_UNAUTHORIZED)
     
+    if not auth_header:
+        return JsonResponse(request.data,status=status.HTTP_401_UNAUTHORIZED)
+    
+    try:
+        token = auth_header.split()[1]
+        token = Token.objects.get(key=token)
+        user = token.user
+
+        correct_answer = check_answer(request.data["answer"], request.data["task_id"])
+
+
+        if correct_answer:
+            user.wins += 1
+            user.save()
+            return JsonResponse({"result" : 1 }, status=status.HTTP_200_OK)
+        else:
+            user.losses += 1
+            user.save()
+            return JsonResponse({"result" : 0 }, status=status.HTTP_200_OK)
+                    
+    except Exception as error:
+
+        return JsonResponse({"error" : error}, status=status.HTTP_404_NOT_FOUND)
+
+
+    
+    
+
 
 @api_view(['GET'])
 def generate_task(request):

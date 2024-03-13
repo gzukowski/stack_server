@@ -1,4 +1,5 @@
 import random
+from .models import CustomUser, Task
 
 GROWTH = {"dec": 1, "inc": -1}
 
@@ -50,3 +51,21 @@ def generate_new_task():
             "values" : values,
             "register" : register
             }
+
+
+def check_answer(answer, task_id):
+
+      task = Task.objects.get(task_id=task_id)
+
+      if not task:
+            return False
+      
+      if task.is_completed:
+            return False
+      
+      answer = answer.lower()
+      
+      if task.correct_answer != answer:
+            return False
+      
+      return True

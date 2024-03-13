@@ -1,3 +1,6 @@
+#testing
+*.rest
+
 # Django #
 *.log
 *.pot
