@@ -1,4 +1,3 @@
-# in your app's models.py
 from django.contrib.auth.models import AbstractUser, Group, Permission, UserManager, BaseUserManager
 from django.db import models
 
@@ -35,5 +34,12 @@ class CustomUser(AbstractUser):
     losses = models.PositiveIntegerField(default=0)
     status = models.CharField(max_length=100, choices=STATUS, default='regular')
 
-    def __str__(self):
-        return self.username
+    #def __str__(self):
+    #    return self.username
+    
+
+
+class Task(models.Model):
+    task_id = models.AutoField(primary_key=True)
+    correct_answer = models.CharField(max_length=255)
+    is_completed = models.BooleanField()

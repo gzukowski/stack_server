@@ -22,7 +22,10 @@ urlpatterns = [
     path('admin', admin.site.urls),
     re_path('login', views.login),
     re_path('signup', views.signup),
-    re_path('validate_token', views.validate_token),
+    re_path('validate_answer', views.validate_answer),
     re_path('add_value', views.add_value),
-    
+    re_path('generate_task', views.generate_task),
+    re_path('check_task', views.check_task),
+    # Add more endpoints for other functionalities if needed
 ]
+    
