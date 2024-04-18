@@ -21,6 +21,10 @@ This guide will walk you through setting up and running a Django web application
 
 3. Create a virtual environment (optional but recommended):
 
+    ```bash
+        python -m venv venv
+    ```
+
 4. Activate the virtual environment:
 
     - On Windows:
